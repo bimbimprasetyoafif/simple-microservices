@@ -1,0 +1,12 @@
+version: "3.1"
+
+services:
+  postgres-e2e-comment:
+    image: postgres:14.2
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: comment
+      POSTGRES_HOST: root
+      POSTGRES_USER: root
+    ports:
+      - 5433:5432

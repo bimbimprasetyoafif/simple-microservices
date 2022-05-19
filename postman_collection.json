@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "9bc0243d-2146-42ec-845b-c6631b7bd6a5",
+		"name": "microservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8000/orgs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"SM Entertainment\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/orgs",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"orgs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/orgs/bimo/comments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/orgs/sm-entertainment/comments",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"orgs",
+						"sm-entertainment",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/orgs/bimo/comments",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost/orgs/sm-entertainment/comments",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"orgs",
+						"sm-entertainment",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/orgs/bimo/comments",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"comment\": \"Taeyeon Release 3nd Album\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/orgs/sm-entertainment/comments",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"orgs",
+						"sm-entertainment",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

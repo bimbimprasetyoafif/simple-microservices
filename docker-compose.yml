@@ -1,0 +1,78 @@
+version: "2.1"
+services:
+  org_db:
+    image: "postgres:14.2"
+    environment:
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : root
+      POSTGRES_DB: organization
+      PGUSER: postgres
+      PGPORT: 5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-h", "localhost", "-p", "5432",-d", "organization"]
+      interval: 10s
+
+  org_service:
+    build: ./organization
+    restart: always
+    environment:
+      ORG_SERVER_PORT: 0.0.0.0:1122
+      ORG_DATABASE_URL: org_db
+      ORG_DATABASE_PORT: 5432
+      ORG_DATABASE_NAME: organization
+      ORG_DATABASE_USER: postgres
+      ORG_DATABASE_PASSWORD: root
+    ports:
+      - "8888:1122"
+    depends_on:
+      org_db:
+        condition: service_healthy
+
+  comment_db:
+    image: "postgres:14.2"
+    environment:
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : root
+      POSTGRES_DB: comment
+      PGUSER: postgres
+      PGPORT: 5433
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-h", "localhost", "-p", "5433", -d", "comment"]
+      interval: 10s
+
+  comment_service:
+    build: ./comment
+    restart: always
+    environment:
+      COMMENT_SERVER_PORT: 0.0.0.0:1123
+      COMMENT_DATABASE_URL: comment_db
+      COMMENT_DATABASE_PORT: 5433
+      COMMENT_DATABASE_NAME: comment
+      COMMENT_DATABASE_USER: postgres
+      COMMENT_DATABASE_PASSWORD: root
+      ORG_URL: org_service
+      ORG_PORT: 1122
+    ports:
+      - "8889:1123"
+    depends_on:
+      org_service:
+        condition: service_started
+      comment_db:
+        condition: service_healthy
+
+  api_gateway:
+    build: ./api-gateway
+    restart: always
+    environment:
+      API_SERVER_PORTT: 0.0.0.0:8000
+      ORG_SERVER_URL: org_service
+      ORG_SERVER_PORT: 1122
+      COMMENT_SERVER_URL: comment_service
+      COMMENT_SERVER_PORT: 1123
+    ports:
+      - "80:8000"
+    depends_on:
+      org_service:
+        condition: service_started
+      comment_service:
+        condition: service_started

@@ -1,0 +1,32 @@
+syntax = "proto3";
+package organizations;
+option go_package = "/";
+
+message Organization {
+  string name = 1;
+  string slug = 2;
+}
+
+message CreateReq {
+  string name = 1;
+}
+
+message MessageResp {
+  int32 status = 1;
+  string message = 2;
+  Organization data = 3;
+}
+
+message CheckReq {
+  string slug = 1;
+}
+
+message CheckResp {
+  bool is_exist = 1;
+  int32 org_id = 2;
+}
+
+service OrganizationService {
+  rpc Create(CreateReq) returns (MessageResp);
+  rpc CheckAvaibility(CheckReq) returns (CheckResp);
+}
